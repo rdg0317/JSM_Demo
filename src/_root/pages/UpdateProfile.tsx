@@ -83,7 +83,7 @@ const UpdateProfile = () => {
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleUpdate)}
+           // onSubmit={form.handleSubmit(handleUpdate)}
             className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
             <FormField
               control={form.control}

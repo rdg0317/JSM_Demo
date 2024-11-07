@@ -10,6 +10,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "../../hooks/use-toast"
 import { useCreateUserAccount, useSignInAccount } from "../../lib/react-query/queriesAndMutations"
 import { useUserContext } from "../../context/AuthContext"
+import { GoogleLogin } from "@react-oauth/google"
+import { jwtDecode} from 'jwt-decode'
+import { dataCredential } from "../../types"
 
 
 function SignupForm() {
@@ -70,6 +73,8 @@ function SignupForm() {
     }
   }
   return (
+    <>
+    
     <Form {...form}>
       <div className="sm-420 flex-center flex-col">
         <img src="assets/images/logo.png" alt='logo' width='200'/>
@@ -136,6 +141,31 @@ function SignupForm() {
       </form>
       </div>
     </Form>
+    <GoogleLogin
+      onSuccess={(credentialResponse) => {
+        const { credential } = credentialResponse;
+  if (credential) {
+    const decoded:dataCredential = jwtDecode(credential);
+    
+    // Constructing user object
+    const user = {
+      name: decoded.name || '',  // Full name
+      email: decoded.email || '',  // Email address
+      username: decoded.email ? decoded.email.split('@')[0] : '',  // Username derived from email
+      password: 'iiitg@123'  // Placeholder password (make sure to handle securely if using in production)
+    };
+    
+    console.log('Login Success', user);  // User object with necessary details
+    onSubmit(user)
+  } else {
+    console.log('No credential received');
+  }
+      }}
+      onError={() => {
+        console.log('Login Failed');
+      }}
+    />
+    </>
   )
 }
 

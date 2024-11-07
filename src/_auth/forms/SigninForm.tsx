@@ -10,6 +10,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "../../hooks/use-toast"
 import { useSignInAccount } from "../../lib/react-query/queriesAndMutations"
 import { useUserContext } from "../../context/AuthContext"
+import { GoogleLogin } from "@react-oauth/google"
+import { jwtDecode } from "jwt-decode"
+import { dataCredential } from "../../types"
 
 
 function SigninForm() {
@@ -104,6 +107,29 @@ function SigninForm() {
             <Link to="/sign-up" className="text-primary-500 text-small-semibold ml-1">Create account</Link>
           </p>
       </form>
+      <GoogleLogin
+      onSuccess={(credentialResponse) => {
+        const { credential } = credentialResponse;
+  if (credential) {
+    const decoded:dataCredential = jwtDecode(credential);
+    
+    // Constructing user object
+    const user = {
+    
+      email: decoded.email || '',  // Email address
+      password: 'iiitg@123'  // Placeholder password (make sure to handle securely if using in production)
+    };
+    
+    console.log('Login Success', user);  // User object with necessary details
+    onSubmit(user)
+  } else {
+    console.log('No credential received');
+  }
+      }}
+      onError={() => {
+        console.log('Login Failed');
+      }}
+    />
       </div>
     </Form>
   )
