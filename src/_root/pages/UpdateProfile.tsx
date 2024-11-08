@@ -1,11 +1,11 @@
-import { Form, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "../../hooks/use-toast";
 import { useUserContext } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loader from "../../components/shared/Loader";
 import { z } from "zod";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import { Button } from "../../components/ui/button";
@@ -83,7 +83,7 @@ const UpdateProfile = () => {
 
         <Form {...form}>
           <form
-           // onSubmit={form.handleSubmit(handleUpdate)}
+            onSubmit={form.handleSubmit(handleUpdate)}
             className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
             <FormField
               control={form.control}
@@ -96,7 +96,7 @@ const UpdateProfile = () => {
                       mediaUrl={currentUser.imageUrl}
                     />
                   </FormControl>
-                  <FormMessage className="shad-form_message" />
+                
                 </FormItem>
               )}
             />
@@ -110,7 +110,7 @@ const UpdateProfile = () => {
                   <FormControl>
                     <Input type="text" className="shad-input" {...field} />
                   </FormControl>
-                  <FormMessage />
+                
                 </FormItem>
               )}
             />
@@ -129,7 +129,7 @@ const UpdateProfile = () => {
                       disabled
                     />
                   </FormControl>
-                  <FormMessage />
+                
                 </FormItem>
               )}
             />
@@ -148,7 +148,7 @@ const UpdateProfile = () => {
                       disabled
                     />
                   </FormControl>
-                  <FormMessage />
+                 
                 </FormItem>
               )}
             />
@@ -165,7 +165,7 @@ const UpdateProfile = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="shad-form_message" />
+                  
                 </FormItem>
               )}
             />
